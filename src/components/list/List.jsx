@@ -1,8 +1,8 @@
 import React from 'react';
 import './list.css';
-import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
 function List({userList, deleteUser}) {
   const router = useHistory();
   const classes = useStyles();
-
+  
   return (
     <div className="list">
       <ul className="items">

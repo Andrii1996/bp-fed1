@@ -6,11 +6,19 @@ import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    marginTop: '100px',
+    textAlign: '-webkit-center',
     '& > *': {
       display: 'flex',
       margin: theme.spacing(1),
       width: '25ch',
     },
+  },
+  input: {
+    width: '350px'
+  },
+  button: {
+    background: '#6200EE',
   },
 }));
 
@@ -59,44 +67,48 @@ function Create ({addNewUser}) {
   return (
     <form action="http://localhost:3000/" onSubmit={handleSubmit} className={classes.root}>
         <TextField
+          variant="filled"
           type="text"
-          className="input"
+          className={classes.input}
           id="standard-basic"
-          placeholder="Enter product name"
+          label="Enter user name"
           required
           value={fullName}
           onChange={handleNameChange}
         />
         <TextField
+          variant="filled"
           type="text"
-          className="input"
+          className={classes.input}
           id="input"
-          placeholder="Enter email"
+          label="Enter email"
           required
           value={email}
           onChange={handleEmailChange}
         />
         <TextField
+          variant="filled"
           type="text"
-          className="input"
+          className={classes.input}
           id="input"
-          placeholder="Enter phone"
+          label="Enter phone"
           required
           value={phone}
           onChange={handlePhoneChange}
         />
         <TextField
+          variant="filled"
           type="text"
-          className="input"
+          className={classes.input}
           id="input"
-          placeholder="Enter address"
+          label="Enter address"
           required
           value={address}
           onChange={handleAddressChange}
         />
           <Button
             type="submit"
-            className="button"
+            className={classes.button}
           >
             SAVE
           </Button>

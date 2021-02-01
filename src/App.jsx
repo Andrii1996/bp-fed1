@@ -51,8 +51,6 @@ function App() {
       address,
     };
 
-    console.log('editUser', id);
-
     setUserList(userList.map((user) => {
       if (user._id !== id) {
         return { ...user };
@@ -64,7 +62,6 @@ function App() {
       };
     }));
   }
-
 
   const addNewUser = (fname, lname, email, phone, address) => {
     const newUser = {

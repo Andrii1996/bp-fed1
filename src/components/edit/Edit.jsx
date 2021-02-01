@@ -1,13 +1,40 @@
 import React, { useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    marginTop: '100px',
+    textAlign: '-webkit-center',
+    '& > *': {
+      display: 'flex',
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+  input: {
+    width: '350px'
+  },
+  button: {
+    width: '100px',
+    background: '#6200EE',
+  },
+  container: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    width: '250px'
+  }
+}));
 
 function Edit ({editUser, deleteUser, userList}) {
   const {id} = useParams();
-  const idx = userList.findIndex(el => el._id === id)
-  const [fname, setfName] = useState(userList[idx].fname);
-  const [email, setEmail] = useState(userList[idx].email);
-  const [phone, setPhone] = useState(userList[idx].phone);
-  const [address, setAddress] = useState(userList[idx].address);
+  const user = userList.find(el => el._id === id)
+  const [fname, setfName] = useState(user?.fname || '');
+  const [email, setEmail] = useState(user?.email || '');
+  const [phone, setPhone] = useState(user?.phone || '');
+  const [address, setAddress] = useState(user?.address || '');
   const router = useHistory();
 
   const handleNameChange = (event) => {
@@ -32,54 +59,62 @@ function Edit ({editUser, deleteUser, userList}) {
     editUser(fname, email, phone, address, id);
     router.push('/');
   };
+
+  const classes = useStyles();
   
   return (
-    <form onSubmit={handleSubmit} className="form">
-        <input
+    <form onSubmit={handleSubmit} className={classes.root} >
+        <TextField
+          variant="filled"
           type="text"
-          className="input"
-          placeholder="Enter product name"
+          className={classes.input}
+          label="Edit product name"
           required
           value={fname}
           onChange={handleNameChange}
         />
-        <input
+        <TextField
           type="text"
-          className="input"
-          placeholder="Enter email"
+          variant="filled"
+          className={classes.input}
+          label="Edit email"
           required
           value={email}
           onChange={handleEmailChange}
         />
-        <input
+        <TextField
           type="text"
-          className="input"
-          placeholder="Enter phone"
+          variant="filled"
+          className={classes.input}
+          label="Edit phone"
           required
           value={phone}
           onChange={handlePhoneChange}
         />
-        <input
+        <TextField
           type="text"
-          className="input"
-          placeholder="Enter address"
+          variant="filled"
+          className={classes.input}
+          label="Edit address"
           required
           value={address}
           onChange={handleAddressChange}
         />
-          <button
-            type="submit"
-            className="button"
-          >
-            Save
-          </button>
-          <button
-            type="button"
-            className="button"
-            onClick={() => deleteUser(userList._id)}
-          >
-            Delete
-          </button>
+          <div className={classes.container}>
+            <Button
+              type="submit"
+              className={classes.button}
+            >
+              Save
+            </Button>
+            <Button
+              type="button"
+              className={classes.button}
+              onClick={() => deleteUser(userList._id)}
+            >
+              Delete
+            </Button>
+          </div>
     </form>
   )
 }
