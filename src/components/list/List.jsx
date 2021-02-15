@@ -2,27 +2,33 @@ import React from 'react';
 import './list.css';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   button: {
     margin: '20px'
+  },
+  user: {
+    textAlign: 'center',
+    padding: '30px'
   }
 }))
 
-function List({userList, deleteUser}) {
+function List({userList, deleteUser, registered}) {
   const router = useHistory();
+  const {id} = useParams()
   const classes = useStyles();
-  
+  const user = registered.find(el => +el.id === +id);
   return (
     <div className="list">
+      <p className={classes.user}>{user.userName}</p>
       <ul className="items">
         {userList.map(user => (
-          <li key={user._id} className="item">
+          <li key={user.id} className="item">
             <div className="item__info">
-              <p>{`${user.fname || "hidden"} ${user.lname || ''}`}</p>
-              <p>{`${user.email} | ${user.phone}`}</p>
-              <p>{`${user.address}`}</p>
+              <p>{`${user.title || ''}`}</p>
+              <p>{`${user.id} | ${user.userId}`}</p>
+              <p>{`${user.completed}`}</p>
             </div>
             <div className="item__options">
               <div className="options">
@@ -31,7 +37,7 @@ function List({userList, deleteUser}) {
                   variant="outlined"
                   className={classes.button}
                   type="button"
-                  onClick={() => router.push(`/edit/${user._id}`)}
+                  onClick={() => router.push(`/edit/${user.id}`)}
                 >
                   EDIT
                 </Button>

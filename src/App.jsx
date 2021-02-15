@@ -3,11 +3,12 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
 } from "react-router-dom";
 import Create from "./components/create/Create";
 import List from './components/list/List';
 import Edit from './components/edit/Edit';
+import SignUp from './components/login/SignUp';
 import {AppBar, Container, Toolbar} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -16,11 +17,26 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '10px'
   },
   item: {
-    padding: '0 25%',
+    padding: '0 15%',
     color: 'white',
     textDecoration: 'none'
   }
 }))
+
+const registered = [
+  {
+    email: 'a.medzyak@gmail.com',
+    password: '1996',
+    userName: 'Andrii',
+    id: 1
+  },
+  {
+    email: 'illia.kovtun.work@gmail.com',
+    password: '1990',
+    userName: 'Illia',
+    id: 2
+  }
+];
 
  
 function App() {
@@ -29,7 +45,7 @@ function App() {
 
   useEffect(() => {
     async function fetchMyAPI() {
-      let response = await fetch(`https://v2mzkzwqi8.execute-api.ca-central-1.amazonaws.com/prod/user`)
+      let response = await fetch(`https://jsonplaceholder.typicode.com/todos`)
       response = await response.json()
       setUserList(response)
     }
@@ -83,8 +99,9 @@ function App() {
         <AppBar position="fixed" className={classes.nav}>
           <Container fixed>
             <Toolbar>
-              <Link to="/" className={classes.item}>LIST</Link>
+              <Link to="/list" className={classes.item}>LIST</Link>
               <Link to="/create" className={classes.item}>CREATE</Link>
+              <Link to="/" className={classes.item}>BACK</Link>
             </Toolbar>
           </Container>
         </AppBar>
@@ -102,12 +119,16 @@ function App() {
               deleteUser={deleteUser}
             />
           </Route>
-          <Route path="/">
+          <Route path="/list/:id">
             <List
               userList={userList}
               setUserList={setUserList}
               deleteUser={deleteUser}
+              registered={registered}
             />
+          </Route>
+          <Route path="/">
+            <SignUp registered={registered}/>
           </Route>
         </Switch>
       </div>

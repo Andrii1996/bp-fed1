@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Edit ({editUser, deleteUser, userList}) {
   const {id} = useParams();
-  const user = userList.find(el => el._id === id)
+  const user = userList.find(el => el.id === id)
   const [fname, setfName] = useState(user?.fname || '');
   const [email, setEmail] = useState(user?.email || '');
   const [phone, setPhone] = useState(user?.phone || '');
